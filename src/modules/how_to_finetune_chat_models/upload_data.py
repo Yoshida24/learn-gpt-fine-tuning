@@ -7,7 +7,7 @@ from modules.how_to_finetune_chat_models import common
 
 def load_recipes_data() -> DataFrame:
     dir = common.DATASET_DIR
-    dataset_name = "cookbook_recipes_nlg_100.csv"
+    dataset_name = common.DATASET_NAME
     recipe_df = pd.read_csv(f"{dir}{dataset_name}")
     return recipe_df
 
@@ -40,19 +40,23 @@ def run() -> common.UploadedFiles:
     pprint(recipe_df.head(5))
 
     # use the first 100 rows of the dataset for training
-    training_df = recipe_df.loc[0:10]
+    training_df = recipe_df.loc[
+        common.TRAIN_DATA_FIRST_LINE_IN_DATASET : common.TRAIN_DATA_LAST_LINE_IN_DATASET
+    ]
 
     # apply the prepare_example_conversation function to each row of the training_df
     training_data = training_df.apply(prepare_example_conversation, axis=1).tolist()
 
-    validation_df = recipe_df.loc[10:20]
+    validation_df = recipe_df.loc[
+        common.VALIDATION_DATA_FIRST_LINE_IN_DATASET : common.VALIDATION_DATA_LAST_LINE_IN_DATASET
+    ]
     validation_data = validation_df.apply(prepare_example_conversation, axis=1).tolist()
 
     save_dir = common.TRAINDATA_DIR
-    training_file_name = "tmp_recipe_finetune_training.jsonl"
+    training_file_name = common.TRAIN_DATA_FILE_NAME
     write_jsonl(training_data, training_file_name, save_dir)
 
-    validation_file_name = "tmp_recipe_finetune_validation.jsonl"
+    validation_file_name = common.VALIDATION_DATA_FILE_NAME
     write_jsonl(validation_data, validation_file_name, save_dir)
 
     with open(f"{save_dir}{training_file_name}", "rb") as training_fd:
