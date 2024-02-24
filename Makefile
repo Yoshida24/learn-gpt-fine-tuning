@@ -1,7 +1,17 @@
-.PHONY: run
-run:
-	@echo "Running..."
-	bash scripts/run.sh
+.PHONY: data_preparation
+data_preparation:
+	@echo "Data Preparation..."
+	sh scripts/data_preparation.sh
+
+.PHONY: train
+train:
+	@echo "Train..."
+	sh scripts/train.sh $(ARGS)
+
+.PHONY: inference
+inference:
+	@echo "Inference..."
+	sh scripts/inference.sh $(ARGS)
 
 .PHONY: setup
 setup:

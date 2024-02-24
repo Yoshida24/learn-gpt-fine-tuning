@@ -4,6 +4,11 @@ import os
 import json
 from dataclasses import dataclass
 
+MODEL_NAME = "gpt-3.5-turbo-1106"
+FINETUNE_MODEL_SUFFIX = "recipe-ner"
+DATASET_DIR = "src/modules/how_to_finetune_chat_models/dataset/"
+TRAINDATA_DIR = "src/modules/how_to_finetune_chat_models/train_data/"
+
 
 @dataclass
 class UploadedFiles:

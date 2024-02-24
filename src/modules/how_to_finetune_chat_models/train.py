@@ -7,8 +7,8 @@ def run(training_file_id: str, validation_file_id) -> None:
     response = client.fine_tuning.jobs.create(
         training_file=training_file_id,
         validation_file=validation_file_id,
-        model="gpt-3.5-turbo-1106",
-        suffix="recipe-ner",
+        model=common.MODEL_NAME,
+        suffix=common.FINETUNE_MODEL_SUFFIX,
     )
 
     job_id = response.id
